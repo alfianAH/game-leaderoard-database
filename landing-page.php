@@ -2,6 +2,23 @@
 include "database/database.php";
 
 $database = new Database();
+
+// Sign up
+if(isset($_POST["nama_depan"]) && isset($_POST["nama_belakang"]) &&
+    isset($_POST["email"]) && isset($_POST["password"])){
+//    echo("Halo" . md5($_POST['password']));
+
+    // INSERT INTO user_tbl VALUES('nama_depan', 'nama_belakang', 'email', 'password')
+    $database->execute(
+            "INSERT INTO user_tbl(nama_depan, nama_belakang, email, password) VALUES('" .
+            $_POST['nama_depan'] . "', '" .
+            $_POST['nama_belakang'] . "', '" .
+            $_POST['email'] . "', '" .
+            md5($_POST['password']) .
+            "')"
+    );
+}
+
 ?>
 
 <html>
@@ -33,13 +50,17 @@ $database = new Database();
             </p>
             <p>
                 <label>
-                    Email: <input type="text" name="email">
+                    Email: <input type="email" name="email">
                 </label>
             </p>
             <p>
                 <label>
                     Password: <input type="password" name="password">
                 </label>
+            </p>
+            <p>
+                <input type="submit" value="Submit" name="submit">
+                <input type="submit" value="Cancel" name="cancel">
             </p>
         </form>
     </div>
@@ -48,13 +69,17 @@ $database = new Database();
         <form method="post">
             <p>
                 <label>
-                    Email: <input type="text" name="email">
+                    Email: <input type="email" name="email">
                 </label>
             </p>
             <p>
                 <label>
                     Password: <input type="password" name="password">
                 </label>
+            </p>
+            <p>
+                <input type="submit" value="Submit" name="submit">
+                <input type="submit" value="Cancel" name="cancel">
             </p>
         </form>
     </div>

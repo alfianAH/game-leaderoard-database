@@ -10,8 +10,10 @@ class Database{
 
         if(mysqli_query($connection, $query)){
             mysqli_close($connection);
+//            echo "Berhasil";
             return true;
         }
+//        echo "Tidak Berhasil";
         mysqli_close($connection);
         return false;
     }
