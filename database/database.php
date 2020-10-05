@@ -10,10 +10,10 @@ class Database{
 
         if(mysqli_query($connection, $query)){
             mysqli_close($connection);
-//            echo "Berhasil";
+            echo "Berhasil";
             return true;
         }
-//        echo "Tidak Berhasil";
+        echo "Tidak Berhasil";
         mysqli_close($connection);
         return false;
     }
@@ -29,9 +29,11 @@ class Database{
 
         if($result->num_rows > 0){
             $connection->close();
+            echo "Berhasil";
             return $result;
         }
         $connection->close();
+        echo "Tidak Berhasil";
         return null;
     }
 

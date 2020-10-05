@@ -4,7 +4,7 @@ include "database/database.php";
 $database = new Database();
 
 // Sign up
-if(isset($_POST["nama_depan"]) && isset($_POST["nama_belakang"]) &&
+if(isset($_POST["signup"]) && isset($_POST["nama_depan"]) && isset($_POST["nama_belakang"]) &&
     isset($_POST["email"]) && isset($_POST["password"])){
 //    echo("Halo" . md5($_POST['password']));
 
@@ -17,6 +17,34 @@ if(isset($_POST["nama_depan"]) && isset($_POST["nama_belakang"]) &&
             md5($_POST['password']) .
             "')"
     );
+}
+
+// Login
+if(isset($_POST["login"]) && isset($_POST["email"]) && isset($_POST["password"])){
+    // Check email
+    if($database->get(
+            "SELECT * FROM user_tbl WHERE email = '" .
+            $_POST["email"] . "'"
+    )){
+        // Check password
+        if($database->get(
+            "SELECT * FROM user_tbl WHERE password = '" .
+            md5($_POST["password"]) . "'"
+        )){
+            echo "Masuk";
+            $query = $database->get("SELECT * FROM user_tbl WHERE email = '" . $_POST["email"] . "'");
+            while ($row = mysqli_fetch_assoc($query)){
+                setcookie("user_id", $row["user_id"]);
+                setcookie("username", $row["nama_depan"] . " " . $row["nama_belakang"]);
+                setcookie("email", $row["email"]);
+                header("Location: user.php");
+            }
+        } else{
+            echo "Password salah";
+        }
+    } else {
+        echo "Email salah";
+    }
 }
 
 ?>
@@ -32,12 +60,12 @@ if(isset($_POST["nama_depan"]) && isset($_POST["nama_belakang"]) &&
 <main>
     <div class="form">
         <p>Welcome</p>
-        <button type="button" id="login-btn" onclick="showLogin()">Log in</button>
-        <button type="button" id="sign-up-btn" onclick="showSignUp()">Sign up</button>
+        <button type="button" id="login-btn" onclick="showLoginSignUp('login', 'signup')">Log in</button>
+        <button type="button" id="sign-up-btn" onclick="showLoginSignUp('signup', 'login')">Sign up</button>
     </div>
 
     <div id="signup" hidden="true">
-        <form method="post">
+        <form method="post" name="signup" onsubmit="return validateSignUp()" required>
             <p>
                 <label>
                     Nama depan: <input type="text" name="nama_depan">
@@ -59,14 +87,14 @@ if(isset($_POST["nama_depan"]) && isset($_POST["nama_belakang"]) &&
                 </label>
             </p>
             <p>
-                <input type="submit" value="Submit" name="submit">
-                <input type="submit" value="Cancel" name="cancel">
+                <input type="submit" value="Submit" name="signup">
+                <input type="reset" value="Cancel" name="cancel">
             </p>
         </form>
     </div>
 
     <div id="login" hidden="true">
-        <form method="post">
+        <form method="post" name="login" onsubmit="return validateLogin()" required>
             <p>
                 <label>
                     Email: <input type="email" name="email">
@@ -78,8 +106,8 @@ if(isset($_POST["nama_depan"]) && isset($_POST["nama_belakang"]) &&
                 </label>
             </p>
             <p>
-                <input type="submit" value="Submit" name="submit">
-                <input type="submit" value="Cancel" name="cancel">
+                <input type="submit" value="Submit" name="login">
+                <input type="reset" value="Cancel" name="cancel">
             </p>
         </form>
     </div>
