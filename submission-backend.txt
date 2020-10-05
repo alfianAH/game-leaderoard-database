@@ -1,0 +1,43 @@
+1. Fitur Register User
+2. Fitur Login User
+3. Fitur Submit Score user / Game
+4. Game memiliki tipe leaderboard nilai tertinggi dari seluruh score yang disubmit
+5. Game memiliki sejumlah N level. 
+Sehingga setiap score terikat pada level tertentu
+6. Game memiliki periode mulai dan berakhir, 
+sehingga setiap user hanya dapat mensubmit score dalam periode waktu tersebut
+7. Setiap score user disimpan pada basis data
+Bonus! Kerjakan dengan tambahan spesifikasi berikut untuk mendapatkan nilai tambahan.
+8. Terdapat beberapa game dalam sebuah sistem
+9. Setiap user dapat mensubmit semua game yang terdaftar pada sistem
+
+Tabel
+1. user_tbl
+- user_id (int (255) AI, PK)
+- nama_depan (varchar (50))
+- nama_belakang (varchar (50))
+- email (varchar (100))
+- password (varchar (255))
+
+2. game_tbl
+- game_id (int (255), AI, PK)
+- nama_game (varchar (50))
+- tipe_leaderboard (boolean): jika 0 maka descending, 1 ascending
+
+3. in_game_tbl
+- level (int (255), PK)
+- game_id (int (255), FK)
+- user_id (int (255), FK)
+- score (int (255))
+- waktu_submit (datetime)
+
+4. user_game_data_tbl
+- user_game_data_id (int (255), AI, PK)
+- user_id (int (255), FK)
+- game_id (int (255), FK)
+- level (int (255), FK)
+- waktu_mulai (datetime)
+- waktu_berhenti (datetime)
+
+
+user_tbl (1 -> N) user_game_data_tbl (N -> 1) game_tbl
