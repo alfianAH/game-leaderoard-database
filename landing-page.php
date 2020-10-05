@@ -65,7 +65,9 @@ if(isset($_POST["login"]) && isset($_POST["email"]) && isset($_POST["password"])
     </div>
 
     <div id="signup" hidden="true">
-        <form method="post" name="signup" onsubmit="return validateSignUp()" required>
+        <form method="post" name="signup"
+              onsubmit="return validateInput('signup', ['nama_depan', 'nama_belakang', 'email', 'password'])"
+              required>
             <p>
                 <label>
                     Nama depan: <input type="text" name="nama_depan">
@@ -94,7 +96,8 @@ if(isset($_POST["login"]) && isset($_POST["email"]) && isset($_POST["password"])
     </div>
 
     <div id="login" hidden="true">
-        <form method="post" name="login" onsubmit="return validateLogin()" required>
+        <form method="post" name="login"
+              onsubmit="return validateInput('login', ['email', 'password'])" required>
             <p>
                 <label>
                     Email: <input type="email" name="email">
