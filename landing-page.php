@@ -34,9 +34,10 @@ if(isset($_POST["login"]) && isset($_POST["email"]) && isset($_POST["password"])
             echo "Masuk";
             $query = $database->get("SELECT * FROM user_tbl WHERE email = '" . $_POST["email"] . "'");
             while ($row = mysqli_fetch_assoc($query)){
-                setcookie("user_id", $row["user_id"]);
-                setcookie("username", $row["nama_depan"] . " " . $row["nama_belakang"]);
-                setcookie("email", $row["email"]);
+                // 86400 is 1 day
+                setcookie("user_id", $row["user_id"], time() + 86400 * 15);
+                setcookie("username", $row["nama_depan"] . " " . $row["nama_belakang"], time() + 86400 * 15);
+                setcookie("email", $row["email"], time() + 86400 * 15);
                 header("Location: user.php");
             }
         } else{

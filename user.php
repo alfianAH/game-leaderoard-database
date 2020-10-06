@@ -1,4 +1,13 @@
 <?php
+// Logout
+if(isset($_POST["logout"])){
+    echo "Logout";
+    setcookie("user_id", "", time() - 3600);
+    setcookie("username", "" . " ", time() - 3600);
+    setcookie("email", "", time() - 3600);
+    header("Location: landing-page.php");
+}
+
 if(isset($_POST["arknights"]) && isset($_POST["level"]) && isset($_POST["score"])){
     echo "arknek";
     echo $_POST["level"];
@@ -29,6 +38,11 @@ if(isset($_POST["among-us"]) && isset($_POST["level"]) && isset($_POST["score"])
         echo "<br>";
         echo "Email: " . $_COOKIE["email"];
         ?>
+    </p>
+    <p>
+        <form method="post" name="logout">
+            <input type="submit" value="logout" name="logout">
+        </form>
     </p>
 
     <label>
